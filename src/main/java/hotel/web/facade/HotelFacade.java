@@ -11,6 +11,8 @@ import javax.persistence.PersistenceContext;
 import hotel.web.entities.Hotel;
 import java.util.List;
 import javax.persistence.TypedQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -18,6 +20,8 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class HotelFacade extends AbstractFacade<Hotel> {
+    
+    private static final Logger LOG  = LoggerFactory.getLogger(HotelFacade.class);
     @PersistenceContext(unitName = "HotelPU")
     private EntityManager em;
 

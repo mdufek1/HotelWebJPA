@@ -14,6 +14,8 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,36 +56,76 @@ public class HotelDataController extends HttpServlet {
 
             if (op != null) {
                 if (op.equals("create")) {
+                    
+                    hs.create(h);
 
                 } else if (op.equals("retrieve")) {
+                    System.out.println("retrieving...");
+                    id = Integer.parseInt(request.getParameter("id"));
+                    h = hs.find(id);
+                    JsonObjectBuilder builder = Json.createObjectBuilder()
+                            .add("hotelId", h.getHotelId())
+                            .add("name", h.getHotelName())
+                            .add("address", h.getStreetAddress())
+                            .add("city", h.getCity())
+                            .add("state", h.getState())
+                            .add("zip", h.getPostalCode())
+                            .add("notes", h.getNotes());
 
-                } else if (op.equals("update")) {
-
-                } else if (op.equals("delete")) {
-
-                }
-                
-            }
-                    result = hs.findAll();
-                    JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
-                    result.forEach((hotel) -> {
-                        jsonArrayBuilder.add(
-                                Json.createObjectBuilder()
-                                .add("hotelId", hotel.getHotelId())
-                                .add("name", hotel.getHotelName())
-                                .add("address", hotel.getStreetAddress())
-                                .add("city", hotel.getCity())
-                                .add("state", hotel.getState())
-                                .add("zip", hotel.getPostalCode())
-                                .add("notes", hotel.getNotes())
-                        );
-                    });
-                    JsonArray hotelsJson = jsonArrayBuilder.build();
+                    JsonObject hotelJson = builder.build();
                     response.setContentType("application/json");
-                    out.write(hotelsJson.toString());
+                    out.write(hotelJson.toString());
                     out.flush();
-                
-            
+                    getAll = false;
+                } else if (op.equals("update")) {
+                    id = Integer.parseInt(request.getParameter("id"));
+                    h = new Hotel(id, (String) request.getParameter("name"), (String) request.getParameter("address"), (String) request.getParameter("city"), (String) request.getParameter("state"), (String) request.getParameter("zip"), (String) request.getParameter("note"));
+                    hs.edit(h);
+                    id = Integer.parseInt(request.getParameter("id"));
+                    h = hs.find(id);
+                    JsonObjectBuilder builder = Json.createObjectBuilder()
+                            .add("hotelId", h.getHotelId())
+                            .add("name", h.getHotelName())
+                            .add("address", h.getStreetAddress())
+                            .add("city", h.getCity())
+                            .add("state", h.getState())
+                            .add("zip", h.getPostalCode())
+                            .add("notes", h.getNotes());
+
+                    JsonObject hotelJson = builder.build();
+                    response.setContentType("application/json");
+                    out.write(hotelJson.toString());
+                    out.flush();
+                    getAll = false;
+                } else if (op.equals("delete")) {
+                    id = Integer.parseInt(request.getParameter("id"));
+                    hs.remove(hs.find(id));
+                    
+                }
+
+            }
+            if (getAll) {
+                System.out.println("getting all...");
+                result = hs.findAll();
+                JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+                result.forEach((hotel) -> {
+                    jsonArrayBuilder.add(
+                            Json.createObjectBuilder()
+                            .add("hotelId", hotel.getHotelId())
+                            .add("name", hotel.getHotelName())
+                            .add("address", hotel.getStreetAddress())
+                            .add("city", hotel.getCity())
+                            .add("state", hotel.getState())
+                            .add("zip", hotel.getPostalCode())
+                            .add("notes", hotel.getNotes())
+                    );
+                });
+
+                JsonArray hotelsJson = jsonArrayBuilder.build();
+                response.setContentType("application/json");
+                out.write(hotelsJson.toString());
+                out.flush();
+            }
 
         }
     }

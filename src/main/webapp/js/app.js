@@ -6,11 +6,11 @@
     $(function () {
 
         // declare JQuery selectors and cache results
-        var $btnAdd = $('#btnAdd');
+        var $btnAdd = $('#create');
         var $btnSearch = $('#btnSearch');
-        var $btnDelete = $('#btnDelete');
-        var $btnSave = $('#btnSave');
-        var $hotelId = $('#hotelId');
+        var $btnDelete = $('#delete');
+        var $btnSave = $('update');
+        var $hotelId = $('#id');
         var $hotelName = $('#name');
         var $hotelAddress = $('#address');
         var $hotelCity = $('#city');
@@ -22,9 +22,7 @@
         $btnDelete.hide();
 
         $btnAdd.on('click', function () {
-            clearForm();
-            $btnDelete.hide();
-            $hotelName.focus();
+            addHotel();
             return;
         });
 
@@ -59,8 +57,7 @@
         function renderList(hotels) {
             $('#hotelList li').remove();
             $.each(hotels, function (index, hotel) {
-                $('#hotelList').append('<li><a href="#" data-identity="'
-                        + baseUrl + '?action=findone&hotelId='
+                $('#hotelList').append('<li><a href="#" id="'
                         + hotel.hotelId + '">' + hotel.name + '</a></li>');
             });
         }
@@ -70,26 +67,29 @@
         }
 
         $('#hotelList').on('click', "a", function () {
-            findById($(this).data('identity'));
+            findById($(this).attr("id"));
         });
 
         function findById(self) {
-            $.get(self).then(function (hotel) {
+            $.get(baseUrl+"?op=retrieve&id="+self).then(function (hotel) {
+               
                 renderDetails(hotel);
-                $btnDelete.show();
+                $btnDelete.show();               
             }, handleError);
             return false;
         }
 
         function renderDetails(hotel) {
             if (hotel.name === undefined) {
-                $('#hotelId').val(hotel.hotelId);
+                $('#id').val(hotel.hotelId);
             } else {
                 var id = hotel.hotelId;
-                $('#hotelId').val(id);
+                $('#id').val(id);
             }
             $('#name').val(hotel.name);
-            $('#address').val(hotel.address);
+            $('#street').val(hotel.address);
+            $('#state').val(hotel.state);
+            $('#notes').val(hotel.notes);
             $('#city').val(hotel.city);
             $('#zip').val(hotel.zip);
         }
@@ -127,7 +127,7 @@
             $.ajax({
                 type: 'POST',
                 contentType: 'application/json',
-                url: baseUrl + "?action=update",
+                url: baseUrl + "?op=create",
                 dataType: "json",
                 data: formToJSON()
             })
@@ -138,6 +138,7 @@
             })
             .fail(function ( jqXHR, textStatus, errorThrown ) {
                 alert("Hotel could not be added due to: " + errorThrown);
+                console.log(formToJSON());
             });
         }
 
@@ -147,7 +148,7 @@
             $.ajax({
                 type: 'POST',
                 contentType: 'application/json',
-                url: baseUrl + "?action=update",
+                url: baseUrl + "?op=update",
                 dataType: "json",
                 data: formToJSON()
             })
@@ -165,7 +166,7 @@
             console.log('deleteHotel');
             $.ajax({
                 type: 'POST',
-                url: baseUrl + "?action=delete&hotelId=" + $hotelId.val()
+                url: baseUrl + "?op=delete&id=" + $hotelId.val()
             })
             .done(function () {
                 findAll();
@@ -180,13 +181,15 @@
 
         function renderDetails(hotel) {
             if (hotel.name === undefined) {
-                $('#hotelId').val(hotel.hotelId);
+                $('#id').val(hotel.hotelId);
             } else {
                 var id = hotel.hotelId;
-                $('#hotelId').val(id);
+                $('#id').val(id);
             }
             $('#name').val(hotel.name);
-            $('#address').val(hotel.address);
+            $('#street').val(hotel.address);
+            $('#state').val(hotel.state);
+            $('#notes').val(hotel.notes);
             $('#city').val(hotel.city);
             $('#zip').val(hotel.zip);
         }
@@ -194,11 +197,12 @@
 // Helper function to serialize all the form fields into a JSON string
         function formToJSON() {
             return JSON.stringify({
-                "hotelId": $hotelId.val(),
+                "id": $hotelId.val(),
                 "address": $hotelAddress.val(),
                 "city": $hotelCity.val(),
                 "name": $hotelName.val(),
                 "zip": $hotelZip.val(),
+                "notes": $("#notes").val()
             });
         }
     });
