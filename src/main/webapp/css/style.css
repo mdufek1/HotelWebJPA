@@ -1,0 +1,201 @@
+body {
+  font-family: "Century Gothic";
+  font-weight:bold;
+  margin:0;
+}
+#box2{
+    width:70%;
+    height:100%;
+    left:30%;
+    top:0;
+    padding-left:5%;
+    position:relative;
+}
+
+tr, td{
+    padding:10px;
+}
+
+.hotel{
+     list-style-type:none;
+     padding-bottom:10px;
+}
+
+.hotel:hover{
+    background:grey;
+    text:black;
+}
+
+#hotelSelectLeft{
+padding-top:10px;
+overflow-y:scroll;
+height:100%;
+position:relative;
+top:0px;
+left:0px;
+}
+ 
+.selected{
+background:black;
+color:white;
+}
+
+nav#menu {
+  margin-top: 0;
+  text-align: center;
+  height: 50px;
+  width: 100%;
+}
+
+nav#menu ul {
+  padding: 0;
+  background: white;
+  margin: 0 auto;
+  display: inline-block;
+  height: 50px;
+}
+
+nav#menu ul li {
+  float: left;
+  padding: 0 20px;
+  background: #3498db;
+  list-style: none;
+  margin-right: 5px;
+  line-height: 50px;
+  height: 50px;
+  border-bottom-right-radius:10;
+  border-bottom-left-radius:10;
+
+}
+
+nav#menu ul li:hover {
+  background: #2980b9;
+  height:70px;
+  line-height: 70px;
+}
+
+nav#menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.3em;
+}
+
+#box{
+padding:13px;
+border:1px solid lightgrey;
+background:#e6e6e6;
+width:80%;
+height:100%;
+position:absolute;
+margin-left:auto;
+margin-right:auto;
+border-radius:3px;
+margin-top:20px;
+font-size:16px;
+}
+body {
+  font-family: "Century Gothic";
+  font-weight:bold;
+  margin:0;
+}
+
+.champ{
+margin-right:20px;
+margin-top:10px;
+}
+
+#champListLeft{
+overflow-y:scroll;
+width:170px;
+height:100%;
+position:absolute;
+top:0px;
+left:0px;
+}
+
+#champListRight{
+overflow-y:scroll;
+width:170px;
+height:100%;
+position:absolute;
+top:0px;
+right:0px;
+}
+ 
+.selected{
+-webkit-filter: grayscale(100%);
+-moz-filter: grayscale(100%);
+filter: grayscale(100%);
+}
+
+nav#menu {
+  margin-top: 0;
+  text-align: center;
+  height: 50px;
+  width: 100%;
+}
+
+nav#menu ul {
+  padding: 0;
+  background: white;
+  margin: 0 auto;
+  display: inline-block;
+  height: 50px;
+}
+
+nav#menu ul li {
+  float: left;
+  padding: 0 20px;
+  background: #3498db;
+  list-style: none;
+  margin-right: 5px;
+  line-height: 50px;
+  height: 50px;
+  border-bottom-right-radius:10;
+  border-bottom-left-radius:10;
+
+}
+
+nav#menu ul li:hover {
+  background: #2980b9;
+  height:70px;
+  line-height: 70px;
+}
+
+nav#menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.3em;
+}
+
+#box{
+max-height:80%;
+padding:13px;
+border:1px solid lightgrey;
+background:#e6e6e6;
+width:80%;
+height:80%;
+position:relative;
+margin-left:auto;
+margin-right:auto;
+border-radius:3px;
+margin-top:20px;
+font-size:16px;
+min-height:300px;
+}
+
+
+
+input{
+    width:100%;
+}
+
+textarea{
+    width:100%;
+}
+
+@media only screen and (min-width: 1200px){
+button{
+    width:100%;
+}
+}
