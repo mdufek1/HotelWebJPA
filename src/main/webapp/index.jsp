@@ -8,6 +8,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -34,6 +35,12 @@
                 <div class="collapse	navbar-collapse pull-left" id="collapse-menu">
                     <ul class="nav	navbar-nav navbar-right">
                         <li><a href="<%= response.encodeURL("home.jsp")%>">Home</a></li>
+                        <li>
+                            <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_USER">
+                                Logged in as: <sec:authentication property="principal.username"></sec:authentication> ::
+                                <a href='<%= this.getServletContext().getContextPath() + "/j_spring_security_logout"%>'>Log Me Out</a>
+                            </sec:authorize>
+                        </li>
                     </ul>
 
                 </div>
@@ -85,10 +92,14 @@
                        </div>
                         <div class="col-lg-2">
                             <button type="button" id="clear" class="btn btn-default">Clear Table</button>
-                                                        <button type="button" id="create" class="btn btn-info">New Record</button>
+                            <sec:authorize ifAnyGranted="ROLE_ADMIN">
+                                <button type="button" id="create" class="btn btn-info">New Record</button>
+                            </sec:authorize>                         
                             <button type="button" id="update" class="btn btn-primary">Update Changes</button>
-
-                            <button type="button" id="delete" class="btn btn-danger">!!Delete Record!!</button>
+                            
+                            <sec:authorize ifAnyGranted="ROLE_ADMIN">
+                                <button type="button" id="delete" class="btn btn-danger">!!Delete Record!!</button>
+                            </sec:authorize>
                        </div>
                    </div>
                           </div>  
