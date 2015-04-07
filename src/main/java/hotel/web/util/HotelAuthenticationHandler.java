@@ -19,15 +19,16 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 public class HotelAuthenticationHandler extends SimpleUrlAuthenticationSuccessHandler {
     @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
-        String memberTargetUrl = "/user/index.jsp"; // change "memmber" to whatever you use
+        String userTargetUrl = "/user/index.jsp"; // change "memmber" to whatever you use
         String adminTargetUrl = "/user/index.jsp";  // change "admin" to whatever you use and add more taretURLs if needed
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (roles.contains("ROLE_ADMIN")) {
             getRedirectStrategy().sendRedirect(request, response, adminTargetUrl);
-        } else if (roles.contains("ROLE_MEMBER")) {
-            getRedirectStrategy().sendRedirect(request, response, memberTargetUrl);
+        } else if (roles.contains("ROLE_USER")) {
+            getRedirectStrategy().sendRedirect(request, response, userTargetUrl);
         } else {
             super.onAuthenticationSuccess(request, response, authentication);
+            return;
         }
     }
 }

@@ -37,7 +37,7 @@
                         <li><a href="<%= response.encodeURL("../home.jsp")%>">Home</a></li>
                         <li>
                             <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_USER">
-                                <!--Logged in as: <sec:authentication property="principal.username"></sec:authentication> ::-->
+                                <sec:authentication property="principal.username"></sec:authentication> ::
                                 <a href='<%= this.getServletContext().getContextPath() + "/j_spring_security_logout"%>'>Log Me Out</a>
                             </sec:authorize>
                         </li>
