@@ -16,7 +16,7 @@
         var $hotelCity = $('#city');
         var $hotelZip = $('#zip');
         var $searchKey = $('#searchKey');
-        var baseUrl = "hdc";
+        var baseUrl = "../hdc";
 
         findAll();
         $btnDelete.hide();

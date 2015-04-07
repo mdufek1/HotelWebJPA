@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 //@WebServlet(name = "HotelDataController", urlPatterns = {"/hdc"})
 public class HotelDataController extends HttpServlet {
 
-    private static final String RESULT_PAGE = "index.jsp";
+    private static final String RESULT_PAGE = "/user/index.jsp";
 
     @Inject
     private HotelFacade hs;

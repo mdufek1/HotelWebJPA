@@ -14,8 +14,8 @@
     <head>
         <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
         <meta name="viewport" content="width=device-width">
-            <link href="css/bootstrap.min.css" rel="stylesheet" />
-            <link href="css/style.css" rel="stylesheet" type="text/css"/>
+            <link href="../css/bootstrap.min.css" rel="stylesheet" />
+            <link href="../css/style.css" rel="stylesheet" type="text/css"/>
             <title>Third Bootstrap</title>
     </head>
     <body>
@@ -34,10 +34,10 @@
                 </div>
                 <div class="collapse	navbar-collapse pull-left" id="collapse-menu">
                     <ul class="nav	navbar-nav navbar-right">
-                        <li><a href="<%= response.encodeURL("home.jsp")%>">Home</a></li>
+                        <li><a href="<%= response.encodeURL("../home.jsp")%>">Home</a></li>
                         <li>
                             <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_USER">
-                                Logged in as: <sec:authentication property="principal.username"></sec:authentication> ::
+                                <!--Logged in as: <sec:authentication property="principal.username"></sec:authentication> ::-->
                                 <a href='<%= this.getServletContext().getContextPath() + "/j_spring_security_logout"%>'>Log Me Out</a>
                             </sec:authorize>
                         </li>
@@ -112,6 +112,6 @@
 
         </div>
     </div>
-		<script src="js/jquery-1.10.2.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-                <script src="js/app.js"></script>
+		<script src="../js/jquery-1.10.2.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+                <script src="../js/app.js"></script>
