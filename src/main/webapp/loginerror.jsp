@@ -33,6 +33,9 @@
         </p>
         <p class='helpText'>
             <a style="color: #ffc400;" href='<%= this.getServletContext().getContextPath() + "/login.jsp"%>'>Back to Login Page</a>
+            <sec:authentication property="principal.username"></sec:authentication> ::
+                                <a href='<%= this.getServletContext().getContextPath() + "/j_spring_security_logout"%>'>Log Me Out</a>
+                            </sec:authorize>
         </p>
 
 
