@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,8 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.mail.MailException;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  *
@@ -28,8 +31,10 @@ import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
  */
 public class RegistrationProcessor extends HttpServlet {
     
-   final AbstractApplicationContext ctx = 
-               new ClassPathXmlApplicationContext("applicationContext.xml");
+   ServletContext sctx = getServletContext();
+   WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(sctx);
+//   final AbstractApplicationContext ctx = 
+//               new ClassPathXmlApplicationContext("applicationContext.xml");
     private EmailVerificationSender EmailVerificationSender = (EmailVerificationSender)ctx.getBean("EmailVerificationSender");
    // private EmailVerificationSender EmailVerificationSender = new EmailVerificationSender();
     @Inject
