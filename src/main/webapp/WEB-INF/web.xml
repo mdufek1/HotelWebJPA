@@ -8,15 +8,29 @@
         <servlet-name>HotelDataController</servlet-name>
         <url-pattern>/hdc</url-pattern>
     </servlet-mapping>
-    
-   <!-- Security configuration -->
+    <servlet>
+        <servlet-name>RegistrationProcessor</servlet-name>
+        <servlet-class>hotel.web.util.RegistrationProcessor</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegistrationProcessor</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RegistrationVerifier</servlet-name>
+        <servlet-class>hotel.web.util.RegistrationVerifier</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegistrationVerifier</servlet-name>
+        <url-pattern>/confirm</url-pattern>
+    </servlet-mapping>
+    <!-- Security configuration -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
-
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:applicationContext.xml</param-value>
@@ -30,7 +44,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <!-- end spring configuration -->
-        
     <session-config>
         <session-timeout>
             30

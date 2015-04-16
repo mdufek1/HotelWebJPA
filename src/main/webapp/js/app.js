@@ -17,10 +17,35 @@
         var $hotelZip = $('#zip');
         var $searchKey = $('#searchKey');
         var baseUrl = "../hdc";
-
+        var registerUrl = "/HotelJPA/register"
+        var $btnReg = $('#register');
+        var $user = $('#user');
+        var $password = $('#password');
         findAll();
         $btnDelete.hide();
-
+//
+//        $btnReg.click(function(){
+//            alert("Begining registration")
+//            $.ajax({
+//                type: 'POST',
+//                contentType: 'application/json',
+//                url: registerUrl,
+//                dataType: "json",
+//                data: registerData()
+//            })
+//            .done(function () {
+//                
+//                alert("Registered successfully");
+//            })
+//            .fail(function ( jqXHR, textStatus, errorThrown ) {
+//                console.log(registerData());
+//                console.log(jqXHR.status);
+//               
+//                console.log(jqXHR.responseText);
+//                alert("We couldn't register you because: " + errorThrown);
+//            });
+//        });
+        
         $btnAdd.on('click', function () {
             addHotel();
             return;
@@ -205,6 +230,14 @@
                 "notes": $("#notes").val()
             });
         }
+        
+        function registerData() {
+            return JSON.stringify({
+                "user": $user.val(),
+                "password": $password.val(),
+            });
+        }
     });
 
+   
 }(window.jQuery, window, document));

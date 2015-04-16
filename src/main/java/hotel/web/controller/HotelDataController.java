@@ -59,8 +59,7 @@ public class HotelDataController extends HttpServlet {
                     
                     hs.create(h);
 
-                } else if (op.equals("retrieve")) {
-                    System.out.println("retrieving...");
+                } else if (op.equals("retrieve")) {  
                     id = Integer.parseInt(request.getParameter("id"));
                     h = hs.find(id);
                     JsonObjectBuilder builder = Json.createObjectBuilder()
@@ -105,7 +104,7 @@ public class HotelDataController extends HttpServlet {
 
             }
             if (getAll) {
-                System.out.println("getting all...");
+                
                 result = hs.findAll();
                 JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
                 result.forEach((hotel) -> {

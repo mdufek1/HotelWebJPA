@@ -24,7 +24,13 @@
           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 ">
+    <context:annotation-config/>
+    <context:spring-configured/>
+    <context:component-scan base-package="hotel.web.util" />
+    <context:property-placeholder location="file:/E:/hotel.properties"/>
     <bean id="HotelAuthenticationHandler" class="hotel.web.util.HotelAuthenticationHandler" />
+    
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
     <!-- begin Spring Security config -->
     <!--Won't work without spring managed objects-->
     <sec:global-method-security secured-annotations="enabled" />
@@ -44,8 +50,16 @@
         <sec:port-mappings>
             <sec:port-mapping http="8080" https="8181"/>
         </sec:port-mappings>
-        
-
+        <sec:intercept-url pattern="/registrationVerified.jsp" 
+                           access="isAnonymous()" requires-channel="https"/>
+        <sec:intercept-url pattern="/registrationError.jsp" 
+                           access="isAnonymous()" requires-channel="https"/>
+        <sec:intercept-url pattern="/confirm" 
+                           access="isAnonymous()" requires-channel="https"/>
+         <sec:intercept-url pattern="/register" 
+                           access="isAnonymous()" requires-channel="https"/>
+        <sec:intercept-url pattern="/register.jsp*" 
+                           access="isAnonymous()" requires-channel="https"/>
         <sec:intercept-url pattern="/home.jsp*" 
                            access="isAnonymous()" requires-channel="https"/>
         <sec:intercept-url pattern="/login.jsp*" 
@@ -92,5 +106,37 @@
      
     <!-- Server managed connection pool accessed via JNDI -->
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/hotel"/>
-   
+    
+     <!-- this is a template message that we can pre-load with default state -->
+
+    <bean id="EmailVerificationSender" class="hotel.web.util.EmailVerificationSender" >
+        <property name="mailSender" ref="mailSender" />
+        <property name="templateMessage" ref="templateMessage" />
+    </bean>
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com"/>
+        <property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
+        <property name="port" value="587"/>
+        <property name="javaMailProperties">
+            <props>
+                <!-- Use SMTP transport protocol -->
+                <prop key="mail.transport.protocol">smtp</prop>
+                <!-- Use SMTP-AUTH to authenticate to SMTP server -->
+                <prop key="mail.smtp.auth">true</prop>
+                <!-- Use TLS to encrypt communication with SMTP server -->
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+        <!-- if using Gmail, the from must be the address of the account holder -->
+        <property name="from" value="${mail.username}"/>
+	<!-- replace the value text with your own -->
+        <property name="subject" value="Web App Registration - One More Step Required"/>
+    </bean>
+    
+    
 </beans>
